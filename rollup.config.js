@@ -37,6 +37,8 @@ const primedCjs = commonjs({
   sourceMap: false
 });
 const primedBabel = babel({
+  externalHelpers: true,
+  runtimeHelpers: true,
   babelrc: false,
   exclude: 'node_modules/**(!http-streaming)',
   compact: false,
@@ -45,6 +47,10 @@ const primedBabel = babel({
       loose: true,
       modules: false
     }]
+  ],
+  plugins: [
+    '@babel/external-helpers',
+    '@babel/plugin-transform-runtime'
   ]
 });
 
@@ -71,28 +77,28 @@ const globals = {
   }
 };
 
+const moduleExternals = [
+  'global',
+  'xhr',
+  'tsml',
+  'safe-json-parse',
+  'videojs-vtt.js',
+  'url-toolkit',
+  'm3u8-parser',
+  'mpd-parser',
+  'mux.js',
+  'aes-decrypter',
+  'keycode',
+  '@babel/runtime'
+];
 const externals = {
   browser: Object.keys(globals.browser).concat([
   ]),
-  module: Object.keys(globals.module).concat([
-    'global',
-    'global/document',
-    'global/window',
-    'xhr',
-    'tsml',
-    'safe-json-parse/tuple',
-    'videojs-vtt.js',
-    'url-toolkit',
-    'm3u8-parser',
-    'mpd-parser',
-    'mux.js',
-    'mux.js/lib/mp4',
-    'mux.js/lib/mp4/probe',
-    'mux.js/lib/tools/ts-inspector.js',
-    'mux.js/lib/tools/mp4-inspector',
-    'aes-decrypter',
-    'keycode'
-  ]),
+  module(id) {
+    const result = moduleExternals.some((ext) => id.indexOf(ext) !== -1);
+
+    return result;
+  },
   test: Object.keys(globals.test).concat([
   ])
 };
