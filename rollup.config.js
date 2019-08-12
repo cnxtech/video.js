@@ -82,16 +82,8 @@ const externals = {
     'tsml',
     'safe-json-parse/tuple',
     'videojs-vtt.js',
-    'url-toolkit',
-    'm3u8-parser',
-    'mpd-parser',
-    'mux.js',
-    'mux.js/lib/mp4',
-    'mux.js/lib/mp4/probe',
-    'mux.js/lib/tools/ts-inspector.js',
-    'mux.js/lib/tools/mp4-inspector',
-    'aes-decrypter',
-    'keycode'
+    'keycode',
+    '@videojs/http-streaming'
   ]),
   test: Object.keys(globals.test).concat([
   ])
